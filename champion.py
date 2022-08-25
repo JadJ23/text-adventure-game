@@ -3,7 +3,7 @@ import time
 from pprint import pprint
 
 class champion:
-    def __init__(self, cName, championMeleeAttack, championDefense, cLuck, cRangeAttack, cMagic, championHealth, cMaxHealth, cXP, cCoin):
+    def __init__(self, cName, championMeleeAttack, championDefense, cRangeAttack, cMagic, championHealth, cMaxHealth, cLuck, cXP, cCoin):
         self.name = cName
         self.currentHealth = championHealth
         self.maxHealth = cMaxHealth
@@ -101,6 +101,7 @@ def createChampion():
     return (named, championMeleeBase, championDefenseBase, myLuck, championRangedAttackBase, championMagicBase)
 
 class_data = createChampion()
-character = champion(class_data[0], class_data[1], class_data[2], class_data[3], class_data[4], class_data[5])
+print("\nYour Champion's Stats: ")
+character = champion(class_data[0], class_data[1], class_data[2], class_data[4], class_data[5], 100, 100, class_data[3], 0, 0)
 
 pprint(vars(character))

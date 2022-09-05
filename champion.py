@@ -134,7 +134,34 @@ class enemy:
         self.chance = newChance
     def setName(self, newName):
         self.name = newName
-    
-    
-    
-    
+
+class bossEnemy (enemy):
+    def __init__ (self, eHealth, eAttack, ePower, eChance, eName, bossSuper):
+        super().__init__(eHealth, eAttack, ePower, eChance, eName)
+        self.super = bossSuper
+
+    def getSuper(self):
+        return self.super
+    def setSuper(self, newSuper):
+        self.super = newSuper
+
+def enemyGen(levelBoss, EnemyName):
+    name = EnemyName
+    if levelBoss == False:
+        health = random.randint(50,150)
+        attack = random.randint(20, 100)
+        power = random.randint(10,30)
+        chance = random.randint(1,10)
+        return enemy(health, attack, power, chance, name)
+    else:
+        health = random.randint(200,500)
+        attack = random.randint(100, 200)
+        power = random.randint(35, 55)
+        chance = random.randint(3,10)
+        superMove = random.randint(100, 200)
+        return bossEnemy(health, attack, power, chance, name, superMove)
+
+
+
+# en1 = enemyGen(False, 'Goblin')
+# pprint(vars(en1))

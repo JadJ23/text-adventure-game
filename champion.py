@@ -9,6 +9,8 @@ print("░░████╔═████║░██╔══██║░╚�
 print("░░╚██╔╝░╚██╔╝░██║░░██║██████╔╝░░░██║░░░██║██║░╚███║╚██████╔╝  ██║░░██║███████╗██║░░██║╚█████╔╝")
 print("░░░╚═╝░░░╚═╝░░╚═╝░░╚═╝╚═════╝░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░╚═════╝░  ╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝░╚════╝░")
 time.sleep(0.5)
+print("How to play: You will receive prompts with options. To select the option you would like type the corresponding input exactly as shown. I hope you enjoy it!")
+time.sleep(1.5)
 print(".")
 time.sleep(0.5)
 print(".")
@@ -73,6 +75,7 @@ class champion:
 
 def createChampion():
     print("You slowly open your eyes and hazily look around\nMaybe picking a fight with a Giant wasn't the best idea")
+    time.sleep(0.3)
     print("\nStranger: Hey friend. You alright? You took quite the hit. I thought you might never get up. ")
     named = input("What's your name? ")
     confirmName = input("Stranger: Did you say " + named + " ? Did I hear that right? (y/n) ")
@@ -111,7 +114,9 @@ def createChampion():
     time.sleep(0.3)
     myLuck = random.randint(0,10)
     print("\nDaj: Nice! A real Erdean Academy Product. This is truly fascinating. You'll have to tell me all about it, but that can wait for the road. I'll come back at dawn and we'll set off on our journey. See you then, " + named + ".")
+    time.sleep(0.5)
     print("\n*Daj hands you a coin purse and nods before walking out of the tavern*")
+    time.sleep(0.5)
     print("\n+50 coins!")
     
     return (named, championMeleeBase, championDefenseBase, myLuck, championRangedAttackBase, championMagicBase)
@@ -187,19 +192,33 @@ def sequence1():
     print("\nYou wake the next morning to the sound of horses neighing and cows mooing\nYou feel around and grab a handful of hay. You're in a barn. Some night you had")
     print("\nDaj: Oh there you are my friend! Were you sleeping in the barn? Never mind that. We've got a journey ahead of us and we better get going.")
     print("*You splash your face with water and head out with Daj*")
-    time.sleep(0.3)
+    time.sleep(1.0)
     print("It's been a while since you've left the barn but it's been silent the whole trek. Daj has been acting weird. He seems paranoid.")
     print("Daj: I must tell you that these parts are dangerous. You must be on alert, for your sake and mine.")
     print("You: Would've been nice to know before we got here. I'll keep a lookout, don't worry.")
-    time.sleep(0.5)
+    time.sleep(1.0)
     print("BOOOOOODAAAABOOOOOOOOOOO\nThe sound of a horn. You've heard it before, it's a siren used by Goblins for intruders. It must be for you and Daj")
     print("You: Daj! Quick we've got to go befo-")
+    time.sleep(0.5)
     print("You look over at Daj. He's looking down at his chest. An arrow gleams in sunlight, fresh with blood. He reaches in his pocket and hands you a map.")
-    print("Daj: You must find it. You must save the world. Go now. GO!")
-
-
+    print("Daj: You must... find it. Protect it with... your life. Go now. GO!")
+    print("*You grab the map and look at Daj before darting away*")
+    time.sleep(0.5)
 sequence1()
-
+def sequence2():
+    escape = input("Hide! Where will you go? Cave(1) or Mountain(2) or Village(3) or Valley(4) ")
+    while escape != '1' and escape != '2' and escape != '3' and escape != '4':
+        print("Invalid input. Try Again")
+        escape = input("Hide! Where will you go? Cave(1) or Hill(2) or Village(3) or Valley(4) ")
+    if escape == '1':
+        print("You head towards a cave")
+    if escape == '2':
+        print("You head towards a mountain")
+    if escape == '3':
+        print("You head towards a village")
+    if escape == '4':
+        print("You head towards a valley")
+sequence2()
 
 # en1 = enemyGen(False, 'Goblin')
 # pprint(vars(en1))

@@ -181,7 +181,8 @@ def enemyGen(levelBoss, EnemyName):
         chance = random.randint(3,10)
         superMove = random.randint(100, 200)
         return bossEnemy(health, attack, power, chance, name, superMove)
-
+# en1 = enemyGen(False, 'Goblin')
+# pprint(vars(en1))
 def sequence1():
     print(".")
     time.sleep(0.7)
@@ -219,6 +220,3 @@ def sequence2():
     if escape == '4':
         print("You head towards a valley")
 sequence2()
-
-# en1 = enemyGen(False, 'Goblin')
-# pprint(vars(en1))

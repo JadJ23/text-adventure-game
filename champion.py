@@ -205,7 +205,25 @@ def sequence1():
     print("Daj: You must... find it. Protect it with... your life. Go now. GO!")
     print("*You grab the map and look at Daj before darting away*")
     time.sleep(0.5)
+
 sequence1()
+
+def cave():
+    #to do
+    print("in cave")
+
+def mountain():
+    #to do
+    print("at mtn")
+
+def village():
+    #todo
+    print("At village")
+    
+def valley():
+    #todo
+    print("at valley")
+
 def sequence2():
     escape = input("Hide! Where will you go? Cave(1) or Mountain(2) or Village(3) or Valley(4) ")
     while escape != '1' and escape != '2' and escape != '3' and escape != '4':
@@ -213,10 +231,14 @@ def sequence2():
         escape = input("Hide! Where will you go? Cave(1) or Hill(2) or Village(3) or Valley(4) ")
     if escape == '1':
         print("You head towards a cave")
+        cave()
     if escape == '2':
         print("You head towards a mountain")
+        mountain()
     if escape == '3':
         print("You head towards a village")
+        village()
     if escape == '4':
         print("You head towards a valley")
+        valley()
 sequence2()

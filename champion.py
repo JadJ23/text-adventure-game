@@ -207,24 +207,71 @@ def sequence1():
     time.sleep(0.5)
 
 sequence1()
-
+def leaveLocation():
+    explore = input("Do you want to explore the cave(1) or the mountain(2) or the village(3) or the valley(4)? ")
+    while explore != '1' and explore != '2' and explore != '3' and explore != '4':
+        print("Invalid input. Try Again")
+        explore = input("Hide! Where will you go? Cave(1) or Hill(2) or Village(3) or Valley(4) ")
+    if explore == '1':
+        print("You head towards a cave")
+        cave()
+    if explore == '2':
+        print("You head towards a mountain")
+        mountain()
+    if explore == '3':
+        print("You head towards a village")
+        village()
+    if explore == '4':
+        print("You head towards a valley")
+        valley()
 def cave():
     #to do
     print("You reach the cave")
-
+    stayOrLeave = input("Explore cave(1) or go somewhere else(2)? ")
+    while stayOrLeave != "1" and stayOrLeave != "2":
+        print("Invalid input. try again")
+        stayOrLeave = input("Explore cave(1) or go somewhere else(2)? ")
+    if stayOrLeave == "2":
+        leaveLocation()
+    if stayOrLeave == "1":
+        print("sumn")
 def mountain():
     #to do
     print("You reach the top of the mountain")
-
+    stayOrLeave = input("Explore mountain(1) or go somewhere else(2)? ")
+    while stayOrLeave != "1" and stayOrLeave != "2":
+        print("Invalid input. try again")
+        stayOrLeave = input("Explore mountain(1) or go somewhere else(2)? ")
+    if stayOrLeave == "2":
+        leaveLocation()
+    if stayOrLeave == "1":
+        print("sumn")
 def village():
     #todo
     print("You arrive at a village")
+    stayOrLeave = input("Explore village(1) or go somewhere else(2)? ")
+    while stayOrLeave != "1" and stayOrLeave != "2":
+        print("Invalid input. try again")
+        stayOrLeave = input("Explore village(1) or go somewhere else(2)? ")
+    if stayOrLeave == "2":
+        leaveLocation()
+    if stayOrLeave == "1":
+        print("sumn")
 
 def valley():
     #todo
     print("You reach the valley")
+    stayOrLeave = input("Explore valley(1) or go somewhere else(2)? ")
+    while stayOrLeave != "1" and stayOrLeave != "2":
+        print("Invalid input. try again")
+        stayOrLeave = input("Explore valley(1) or go somewhere else(2)? ")
+    if stayOrLeave == "2":
+        leaveLocation()
+    if stayOrLeave == "1":
+        print("sumn")
 
 def sequence2():
+    print("You look at the map Daj gave you. You recognize the area. You're deep in Goblin territory. There are X's in 4 locations.")
     escape = input("Hide! Where will you go? Cave(1) or Mountain(2) or Village(3) or Valley(4) ")
     while escape != '1' and escape != '2' and escape != '3' and escape != '4':
         print("Invalid input. Try Again")

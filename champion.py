@@ -2,6 +2,20 @@ import random
 import time
 from pprint import pprint
 
+print("░██╗░░░░░░░██╗░█████╗░░██████╗████████╗██╗███╗░░██╗░██████╗░  ██╗░░██╗███████╗██████╗░░█████╗░")
+print("░██║░░██╗░░██║██╔══██╗██╔════╝╚══██╔══╝██║████╗░██║██╔════╝░  ██║░░██║██╔════╝██╔══██╗██╔══██╗")
+print("░╚██╗████╗██╔╝███████║╚█████╗░░░░██║░░░██║██╔██╗██║██║░░██╗░  ███████║█████╗░░██████╔╝██║░░██║")
+print("░░████╔═████║░██╔══██║░╚═══██╗░░░██║░░░██║██║╚████║██║░░╚██╗  ██╔══██║██╔══╝░░██╔══██╗██║░░██║")
+print("░░╚██╔╝░╚██╔╝░██║░░██║██████╔╝░░░██║░░░██║██║░╚███║╚██████╔╝  ██║░░██║███████╗██║░░██║╚█████╔╝")
+print("░░░╚═╝░░░╚═╝░░╚═╝░░╚═╝╚═════╝░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░╚═════╝░  ╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝░╚════╝░")
+time.sleep(0.5)
+print(".")
+time.sleep(0.5)
+print(".")
+time.sleep(0.5)
+print(".")
+time.sleep(0.5)
+print(".\n")
 class champion:
     def __init__(self, cName, championMeleeAttack, championDefense, cRangeAttack, cMagic, championHealth, cMaxHealth, cLuck, cXP, cCoin):
         self.name = cName
@@ -59,20 +73,20 @@ class champion:
 
 def createChampion():
     print("You slowly open your eyes and hazily look around\nMaybe picking a fight with a Giant wasn't the best idea")
-    print("\nStranger: 'Hey friend. You alright? You took quite the hit. I thought you might never get up. ")
-    named = input("What's your name?' ")
-    confirmName = input("Stranger: 'Did you say " + named + " ? Did I hear that right?' (y/n) ")
+    print("\nStranger: Hey friend. You alright? You took quite the hit. I thought you might never get up. ")
+    named = input("What's your name? ")
+    confirmName = input("Stranger: Did you say " + named + " ? Did I hear that right? (y/n) ")
     while confirmName != "y" and confirmName != "n":
         print("\nInvalid input")
-        confirmName = input("Stranger: 'Did you say " + named + " ? Did I hear that right?' (y/n) ")
+        confirmName = input("Stranger: Did you say " + named + " ? Did I hear that right?' (y/n) ")
     if confirmName == "n":
-        named = input("\nStranger: 'Speak up this time. What's your name?' ")
-    print("Stranger: 'Nice to meet you " + named + ". You must have lost your mind picking a fight with Og. My name is Daj.'")
-    time.sleep(0.2)
-    print("Daj pauses and looks you up and down")
-    time.sleep(0.2)
-    print("\nDaj: 'I've been looking for a travelling companion. I know by that tattoo on your neck that you studied at the Erdean Academy of Combat. You seem to be wasting away in this here tavern. Why not join me and see the world?")
-    classSelect = input("Did you study as a Mage(1) a Warrior(2) or Archer(3)?' ")
+        named = input("\nStranger: You best speak up this time. What's your name, friend? ")
+    print("Stranger: Nice to meet you " + named + ". You must have lost your mind picking a fight with Og. My name is Daj.")
+    time.sleep(0.3)
+    print("*Daj pauses and looks you up and down*")
+    time.sleep(0.5)
+    print("\nDaj: I've been looking for a travelling companion. I know by that tattoo on your neck that you studied at the Erdean Academy of Combat. You seem to be wasting away in this here tavern. Why not join me and see the world?")
+    classSelect = input("Did you study as a Mage(1) a Warrior(2) or Archer(3)? ")
     while classSelect != "1" and classSelect != "2" and classSelect != "3":
         print("\nInvalid input")
         classSelect = input("Are you a Mage(1), Warrior(2), or Archer(3)? ")
@@ -91,18 +105,20 @@ def createChampion():
         championMeleeBase = 50
         championDefenseBase = 50
         championRangedAttackBase = 125
-    print("\nDaj: 'Now roll this dice I just want to see something...'")
+    print("\nDaj: Now roll this dice I just want to see something...")
     b = input("Press enter to roll Daj's Luck Dice ")
     print("\nrolling dice...")
-    time.sleep(0.2)
+    time.sleep(0.3)
     myLuck = random.randint(0,10)
-    print("\nDaj: 'Nice! A real Erdean Academy Product. This is truly fascinating. You'll have to tell me all about it, but that can wait for the road. I'll come back at dawn and we'll set off on our journey. See you then, " + named + ".'")
-
+    print("\nDaj: Nice! A real Erdean Academy Product. This is truly fascinating. You'll have to tell me all about it, but that can wait for the road. I'll come back at dawn and we'll set off on our journey. See you then, " + named + ".")
+    print("\n*Daj hands you a coin purse and nods before walking out of the tavern*")
+    print("\n+50 coins!")
+    
     return (named, championMeleeBase, championDefenseBase, myLuck, championRangedAttackBase, championMagicBase)
 
 class_data = createChampion()
 print("\nYour Champion's Stats: ")
-character = champion(class_data[0], class_data[1], class_data[2], class_data[4], class_data[5], 100, 100, class_data[3], 0, 0)
+character = champion(class_data[0], class_data[1], class_data[2], class_data[4], class_data[5], 100, 100, class_data[3], 0, 50)
 
 pprint(vars(character))
 
@@ -161,6 +177,28 @@ def enemyGen(levelBoss, EnemyName):
         superMove = random.randint(100, 200)
         return bossEnemy(health, attack, power, chance, name, superMove)
 
+def sequence1():
+    print(".")
+    time.sleep(0.7)
+    print(".")
+    time.sleep(0.7)
+    print(".")
+    time.sleep(0.7)
+    print("\nYou wake the next morning to the sound of horses neighing and cows mooing\nYou feel around and grab a handful of hay. You're in a barn. Some night you had")
+    print("\nDaj: Oh there you are my friend! Were you sleeping in the barn? Never mind that. We've got a journey ahead of us and we better get going.")
+    print("*You splash your face with water and head out with Daj*")
+    time.sleep(0.3)
+    print("It's been a while since you've left the barn but it's been silent the whole trek. Daj has been acting weird. He seems paranoid.")
+    print("Daj: I must tell you that these parts are dangerous. You must be on alert, for your sake and mine.")
+    print("You: Would've been nice to know before we got here. I'll keep a lookout, don't worry.")
+    time.sleep(0.5)
+    print("BOOOOOODAAAABOOOOOOOOOOO\nThe sound of a horn. You've heard it before, it's a siren used by Goblins for intruders. It must be for you and Daj")
+    print("You: Daj! Quick we've got to go befo-")
+    print("You look over at Daj. He's looking down at his chest. An arrow gleams in sunlight, fresh with blood. He reaches in his pocket and hands you a map.")
+    print("Daj: You must find it. You must save the world. Go now. GO!")
+
+
+sequence1()
 
 
 # en1 = enemyGen(False, 'Goblin')

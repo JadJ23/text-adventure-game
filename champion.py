@@ -210,19 +210,19 @@ sequence1()
 
 def cave():
     #to do
-    print("in cave")
+    print("You reach the cave")
 
 def mountain():
     #to do
-    print("at mtn")
+    print("You reach the top of the mountain")
 
 def village():
     #todo
-    print("At village")
-    
+    print("You arrive at a village")
+
 def valley():
     #todo
-    print("at valley")
+    print("You reach the valley")
 
 def sequence2():
     escape = input("Hide! Where will you go? Cave(1) or Mountain(2) or Village(3) or Valley(4) ")

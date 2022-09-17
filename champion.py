@@ -1,3 +1,4 @@
+from operator import truediv
 import random
 import time
 from pprint import pprint
@@ -18,58 +19,35 @@ time.sleep(0.5)
 print(".")
 time.sleep(0.5)
 print(".\n")
+
+keyCount = 0
+valley = False
+village = False
+mtn = False
+cave = False
+
 class champion:
-    def __init__(self, cName, championMeleeAttack, championDefense, cRangeAttack, cMagic, championHealth, cMaxHealth, cLuck, cXP, cCoin):
+    def __init__(self, cName, championMeleeAttack, championHealth, cCoin):
         self.name = cName
-        self.currentHealth = championHealth
-        self.maxHealth = cMaxHealth
-        self.xp = cXP
+        self.health = championHealth
         self.meleeAttack = championMeleeAttack
-        self.defense = championDefense
-        self.luck = cLuck
-        self.rangedAttack = cRangeAttack
-        self.magic = cMagic
         self.coins = cCoin
 
     def getChampionName(self):
         return self.name
-    def getCurrentHealthStat(self):
-        return self.currentHealth
-    def getMaxHealth(self):
-        return self.maxHealth
-    def getXpStat(self):
-        return self.xp
     def getMeleeAttackStat(self):
         return self.meleeAttack
-    def getDefenseStat(self):
-        return self.defense
-    def getLuckStat(self):
-        return self.luck
-    def getRangedAttackStat(self):
-        return self.rangedAttack
-    def getMagicStat(self):
-        return self.magic
+    def getHealth(self):
+        return self.health
     def getCoinAmount(self):
         return self.coins
         
     def setChampionName(self, newName):
         self.name = newName;
-    def setCurrentHealthStat(self, newCurrentHealth):
-        self.currentHealth = newCurrentHealth;
-    def setMaxHealth(self, newMaxHealth):
-        self.maxHealth = newMaxHealth;
-    def setXpStat(self, newXpStat):
-        self.xp = newXpStat
+    def setHealthStat(self, newCurrentHealth):
+        self.health = newCurrentHealth
     def setMeleeAttackStat(self, newMeleeAttack):
         self.meleeAttack = newMeleeAttack
-    def setDefenseStat(self, newDefense):
-        self.defense = newDefense
-    def setLuckStat(self, newLuck):
-        self.luck = newLuck
-    def setRangedAttackStat(self, newRangedAttack):
-        self.rangedAttack = newRangedAttack
-    def setMagicStat(self, newMagic):
-        self.magic = newMagic
     def setCoinAmount(self, newCoinTotal):
         self.coins = newCoinTotal
 
@@ -94,20 +72,11 @@ def createChampion():
         print("\nInvalid input")
         classSelect = input("Are you a Mage(1), Warrior(2), or Archer(3)? ")
     if classSelect == "1":
-        championMagicBase = 100
-        championMeleeBase = 25
-        championDefenseBase = 50
-        championRangedAttackBase = 50
+        championMeleeBase = 150
     if classSelect == "2":
-        championMagicBase = 0
-        championMeleeBase = 125
-        championDefenseBase = 75
-        championRangedAttackBase = 25
+        championMeleeBase = 150
     if classSelect == "3":
-        championMagicBase = 0
-        championMeleeBase = 50
-        championDefenseBase = 50
-        championRangedAttackBase = 125
+        championMeleeBase = 150
     print("\nDaj: Now roll this dice I just want to see something...")
     b = input("Press enter to roll Daj's Luck Dice ")
     print("\nrolling dice...")
@@ -119,11 +88,11 @@ def createChampion():
     time.sleep(0.5)
     print("\n+50 coins!")
     
-    return (named, championMeleeBase, championDefenseBase, myLuck, championRangedAttackBase, championMagicBase)
+    return (named, championMeleeBase)
 
 class_data = createChampion()
 print("\nYour Champion's Stats: ")
-character = champion(class_data[0], class_data[1], class_data[2], class_data[4], class_data[5], 100, 100, class_data[3], 0, 50)
+character = champion(class_data[0], class_data[1], 500, 0)
 
 pprint(vars(character))
 
@@ -131,56 +100,43 @@ class enemy:
     def __init__ (self, eHealth, eAttack, ePower, eChance, eName):
         self.health = eHealth
         self.attack = eAttack
-        self.power = ePower
-        self.chance = eChance
-        self.name = eName
-
+        self.name = eName    
     def getHealth(self):
         return self.health
     def getAttack(self):
         return self.attack
-    def getPower(self):
-        return self.power
-    def getChance(self):
-        return self.chance
     def getName(self):
         return self.name
     def setHealth(self, newHealth):
         self.health = newHealth
     def setAttack(self, newAttack):
         self.attack = newAttack
-    def setPower(self, newPower):
-        self.power = newPower
-    def setChance(self, newChance):
-        self.chance = newChance
     def setName(self, newName):
         self.name = newName
 
 class bossEnemy (enemy):
-    def __init__ (self, eHealth, eAttack, ePower, eChance, eName, bossSuper):
-        super().__init__(eHealth, eAttack, ePower, eChance, eName)
-        self.super = bossSuper
-
-    def getSuper(self):
-        return self.super
-    def setSuper(self, newSuper):
-        self.super = newSuper
+    def __init__ (self, eHealth, eAttack, eName):
+        super().__init__(eHealth, eAttack, eName)
 
 def enemyGen(levelBoss, EnemyName):
     name = EnemyName
     if levelBoss == False:
-        health = random.randint(50,150)
-        attack = random.randint(20, 100)
+        health = random.randint(50,350)
+        attack = random.randint(20, 50)
         power = random.randint(10,30)
         chance = random.randint(1,10)
         return enemy(health, attack, power, chance, name)
     else:
-        health = random.randint(200,500)
-        attack = random.randint(100, 200)
+        health = random.randint(200,600)
+        attack = random.randint(75, 150)
         power = random.randint(35, 55)
         chance = random.randint(3,10)
         superMove = random.randint(100, 200)
         return bossEnemy(health, attack, power, chance, name, superMove)
+gobPatrol = enemyGen(False, 'Goblin Patrol')
+gobPatrol2 = enemyGen(False, 'Goblin Patrol')
+gobPatrol3 = enemyGen(False, 'Goblin Patrol')
+gobPatrol4 = enemyGen(False, 'Goblin Patrol')
 # en1 = enemyGen(False, 'Goblin')
 # pprint(vars(en1))
 def sequence1():
@@ -205,7 +161,9 @@ def sequence1():
     print("Daj: You must... find it. Protect it with... your life. Go now. GO!")
     print("*You grab the map and look at Daj before darting away*")
     time.sleep(0.5)
+    print("You look at the map Daj gave you. You recognize the area. You're deep in Goblin territory. There are X's in 4 locations.")
 
+        
 sequence1()
 def leaveLocation():
     explore = input("Do you want to explore the cave(1) or the mountain(2) or the village(3) or the valley(4)? ")
@@ -224,8 +182,103 @@ def leaveLocation():
     if explore == '4':
         print("You head towards a valley")
         valley()
+
+def endFight():
+    print("at boss fight")
+    #todo boss batlle and finale
+    return
+
+def caveBattle():
+    global keyCount
+    global cave
+    playerDamaged = 0
+    oppDamaged = 0
+    while (playerDamaged < character.getHealth()) and (gobPatrol.getHealth() > oppDamaged):
+        oppDamaged += character.getMeleeAttackStat()
+        print("You did " + str(character.getMeleeAttackStat()) + " points of damage")
+        print("Goblin Patrol now has " + str(gobPatrol.getHealth() - oppDamaged) + " health points")
+        if oppDamaged >= gobPatrol.getHealth():
+            print("You defeated the enemy!")
+            print("+50 Coins!")
+            character.setCoinAmount(character.getCoinAmount() + 50)
+            return
+        playerDamaged += gobPatrol.getAttack()
+        print("Enemy did " + str(gobPatrol.getAttack()) + " points of damage")
+        print("You now have " + str(character.getHealth() - playerDamaged) +" health points")
+        if playerDamaged >= character.getHealth():
+            print("You were defeated but your drink a potion before your eyes close...")
+            character.setHealthStat(character.getHealth() + 50)
+            character.setMeleeAttackStat(character.getMeleeAttackStat() + 50)
+            caveBattle()
+def mtnBattle():
+    global keyCount
+    global mtn
+    playerDamaged = 0
+    oppDamaged = 0
+    while (playerDamaged < character.getHealth()) and (gobPatrol2.getHealth() > oppDamaged):
+        oppDamaged += character.getMeleeAttackStat()
+        print("You did " + str(character.getMeleeAttackStat()) + " points of damage")
+        print("Goblin Patrol now has " + str(gobPatrol2.getHealth() - oppDamaged) + " health points")
+        if oppDamaged >= gobPatrol2.getHealth():
+            print("You defeated the enemy!")
+            print("+50 Coins!")
+            character.setCoinAmount(character.getCoinAmount() + 50)
+            return
+        playerDamaged += gobPatrol2.getAttack()
+        print("Enemy did " + gobPatrol2.getAttack() + " points of damage")
+        print("You now have " + str(character.getHealth() - playerDamaged) +" health points")
+        if playerDamaged >= character.getHealth():
+            print("You were defeated but your drink a potion before your eyes close...")
+            character.setHealthStat(character.getHealth() + 50)
+            character.setMeleeAttackStat(character.getMeleeAttackStat() + 50)
+            mtnBattle()
+def villageBattle():
+    global keyCount
+    global village
+    playerDamaged = 0
+    oppDamaged = 0
+    while (playerDamaged < character.getHealth()) and (gobPatrol3.getHealth() > oppDamaged):
+        oppDamaged += character.getMeleeAttackStat()
+        print("You did " + str(character.getMeleeAttackStat()) + " points of damage")
+        print("Goblin Patrol now has " + str(gobPatrol3.getHealth() - oppDamaged) + " health points")
+        if oppDamaged >= gobPatrol3.getHealth():
+            print("You defeated the enemy!")
+            print("+50 Coins!")
+            character.setCoinAmount(character.getCoinAmount() + 50)
+            return
+        playerDamaged += gobPatrol3.getAttack()
+        print("Enemy did " + gobPatrol3.getAttack() + " points of damage")
+        print("You now have " + str(character.getHealth() - playerDamaged) +" health points")
+        if playerDamaged >= character.getHealth():
+            print("You were defeated but your drink a potion before your eyes close...")
+            character.setHealthStat(character.getHealth() + 50)
+            character.setMeleeAttackStat(character.getMeleeAttackStat() + 50)
+            villageBattle()
+def valleyBattle():
+    global valley
+    global keyCount
+    playerDamaged = 0
+    oppDamaged = 0
+    while (playerDamaged < character.getHealth()) and (gobPatrol4.getHealth() > oppDamaged):
+        oppDamaged += character.getMeleeAttackStat()
+        print("You did " + str(character.getMeleeAttackStat()) + " points of damage")
+        print("Goblin Patrol now has " + str(gobPatrol4.getHealth() - oppDamaged) + " health points")
+        if oppDamaged >= gobPatrol4.getHealth():
+            print("You defeated the enemy!")
+            print("+50 Coins!")
+            character.setCoinAmount(character.getCoinAmount() + 50)
+            return
+        playerDamaged += gobPatrol4.getAttack()
+        print("Enemy did " + gobPatrol4.getAttack() + " points of damage")
+        print("You now have " + str(character.getHealth() - playerDamaged) +" health points")
+        if playerDamaged >= character.getHealth():
+            print("You were defeated but your drink a potion before your eyes close...")
+            character.setHealthStat(character.getHealth() + 50)
+            character.setMeleeAttackStat(character.getMeleeAttackStat() + 50)
+            valleyBattle()
+        
 def cave():
-    #to do
+    global keyCount
     print("You reach the cave")
     stayOrLeave = input("Explore cave(1) or go somewhere else(2)? ")
     while stayOrLeave != "1" and stayOrLeave != "2":
@@ -234,9 +287,17 @@ def cave():
     if stayOrLeave == "2":
         leaveLocation()
     if stayOrLeave == "1":
-        print("sumn")
+        print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
+        caveBattle()
+        keyCount += 1
+        print("You found a key in the satchel of one of the Goblins. You now have " + str(keyCount) + " keys")
+        cave = True
+        if keyCount == 4:
+            endFight()
+        sequence2
 def mountain():
     #to do
+    global keyCount
     print("You reach the top of the mountain")
     stayOrLeave = input("Explore mountain(1) or go somewhere else(2)? ")
     while stayOrLeave != "1" and stayOrLeave != "2":
@@ -245,9 +306,18 @@ def mountain():
     if stayOrLeave == "2":
         leaveLocation()
     if stayOrLeave == "1":
-        print("sumn")
+        print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
+        mtnBattle()
+        keyCount += 1
+        mtn = True
+        print("You found a key in the hands of one of the Goblins. You now have " + str(keyCount) + " keys")
+        if keyCount == 4:
+            endFight()
+        sequence2()
+
 def village():
     #todo
+    global keyCount
     print("You arrive at a village")
     stayOrLeave = input("Explore village(1) or go somewhere else(2)? ")
     while stayOrLeave != "1" and stayOrLeave != "2":
@@ -256,10 +326,16 @@ def village():
     if stayOrLeave == "2":
         leaveLocation()
     if stayOrLeave == "1":
-        print("sumn")
-
+        print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
+        villageBattle()
+        keyCount += 1
+        print("You found a key in the pocket of one of the Goblins. You now have " + str(keyCount) + " keys")
+        village = True
+        if keyCount == 4:
+            endFight()
+        sequence2()
 def valley():
-    #todo
+    global keyCount
     print("You reach the valley")
     stayOrLeave = input("Explore valley(1) or go somewhere else(2)? ")
     while stayOrLeave != "1" and stayOrLeave != "2":
@@ -268,24 +344,51 @@ def valley():
     if stayOrLeave == "2":
         leaveLocation()
     if stayOrLeave == "1":
-        print("sumn")
+        print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
+        valleyBattle()
+        keyCount += 1
+        print("You found a key in the canteen of one of the Goblins. You now have " + str(keyCount) + " keys")
+        valley = True
+        if keyCount == 4:
+            endFight()
+        sequence2()
 
 def sequence2():
-    print("You look at the map Daj gave you. You recognize the area. You're deep in Goblin territory. There are X's in 4 locations.")
-    escape = input("Hide! Where will you go? Cave(1) or Mountain(2) or Village(3) or Valley(4) ")
+    global cave
+    global village
+    global mtn
+    global valley
+    escape = input("Where will you go? Cave(1) or Mountain(2) or Village(3) or Valley(4) ")
     while escape != '1' and escape != '2' and escape != '3' and escape != '4':
         print("Invalid input. Try Again")
         escape = input("Hide! Where will you go? Cave(1) or Hill(2) or Village(3) or Valley(4) ")
     if escape == '1':
+        if (cave == True):
+            print("You already got the key from the cave. Pick another place")
+            sequence2()
+            return
         print("You head towards a cave")
         cave()
     if escape == '2':
+        if (mtn == True):
+            print("You already got the key from the mountain. Pick another place")
+            sequence2()
+            return
         print("You head towards a mountain")
         mountain()
     if escape == '3':
+        if (village == True):
+            print("You already got the key from the cave. Pick another place")
+            sequence2()
+            return
         print("You head towards a village")
         village()
     if escape == '4':
+        if (valley == True):
+            print("You already got the key from the cave. Pick another place")
+            sequence2()
+            return
         print("You head towards a valley")
         valley()
 sequence2()
+

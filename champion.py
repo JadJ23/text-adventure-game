@@ -21,10 +21,11 @@ time.sleep(0.5)
 print(".\n")
 
 keyCount = 0
-valley = False
-village = False
+val = False
+ville = False
 mtn = False
-cave = False
+cavo = False
+myLuck = 0
 
 class champion:
     def __init__(self, cName, championMeleeAttack, championHealth, cCoin):
@@ -52,6 +53,7 @@ class champion:
         self.coins = newCoinTotal
 
 def createChampion():
+    global myLuck
     print("You slowly open your eyes and hazily look around\nMaybe picking a fight with a Giant wasn't the best idea")
     time.sleep(0.3)
     print("\nStranger: Hey friend. You alright? You took quite the hit. I thought you might never get up. ")
@@ -86,13 +88,12 @@ def createChampion():
     time.sleep(0.5)
     print("\n*Daj hands you a coin purse and nods before walking out of the tavern*")
     time.sleep(0.5)
-    print("\n+50 coins!")
     
     return (named, championMeleeBase)
 
 class_data = createChampion()
 print("\nYour Champion's Stats: ")
-character = champion(class_data[0], class_data[1], 500, 0)
+character = champion(class_data[0], class_data[1], 500, 15*myLuck)
 
 pprint(vars(character))
 
@@ -184,13 +185,17 @@ def leaveLocation():
         valley()
 
 def endFight():
-    print("at boss fight")
+    print("at boss fight**********************************")
     #todo boss batlle and finale
+    endSeq()
+    return
+def endSeq():
+    print("in endseq -_-__-_____-")
     return
 
 def caveBattle():
     global keyCount
-    global cave
+    global cavo
     playerDamaged = 0
     oppDamaged = 0
     while (playerDamaged < character.getHealth()) and (gobPatrol.getHealth() > oppDamaged):
@@ -201,6 +206,8 @@ def caveBattle():
             print("You defeated the enemy!")
             print("+50 Coins!")
             character.setCoinAmount(character.getCoinAmount() + 50)
+            cavo = True
+            keyCount+=1
             return
         playerDamaged += gobPatrol.getAttack()
         print("Enemy did " + str(gobPatrol.getAttack()) + " points of damage")
@@ -223,9 +230,11 @@ def mtnBattle():
             print("You defeated the enemy!")
             print("+50 Coins!")
             character.setCoinAmount(character.getCoinAmount() + 50)
+            mtn = True
+            keyCount+= 1
             return
         playerDamaged += gobPatrol2.getAttack()
-        print("Enemy did " + gobPatrol2.getAttack() + " points of damage")
+        print("Enemy did " + str(gobPatrol2.getAttack()) + " points of damage")
         print("You now have " + str(character.getHealth() - playerDamaged) +" health points")
         if playerDamaged >= character.getHealth():
             print("You were defeated but your drink a potion before your eyes close...")
@@ -234,7 +243,7 @@ def mtnBattle():
             mtnBattle()
 def villageBattle():
     global keyCount
-    global village
+    global ville
     playerDamaged = 0
     oppDamaged = 0
     while (playerDamaged < character.getHealth()) and (gobPatrol3.getHealth() > oppDamaged):
@@ -245,9 +254,11 @@ def villageBattle():
             print("You defeated the enemy!")
             print("+50 Coins!")
             character.setCoinAmount(character.getCoinAmount() + 50)
+            keyCount+= 1
+            ville = True
             return
         playerDamaged += gobPatrol3.getAttack()
-        print("Enemy did " + gobPatrol3.getAttack() + " points of damage")
+        print("Enemy did " + str(gobPatrol3.getAttack()) + " points of damage")
         print("You now have " + str(character.getHealth() - playerDamaged) +" health points")
         if playerDamaged >= character.getHealth():
             print("You were defeated but your drink a potion before your eyes close...")
@@ -255,7 +266,7 @@ def villageBattle():
             character.setMeleeAttackStat(character.getMeleeAttackStat() + 50)
             villageBattle()
 def valleyBattle():
-    global valley
+    global val
     global keyCount
     playerDamaged = 0
     oppDamaged = 0
@@ -267,9 +278,11 @@ def valleyBattle():
             print("You defeated the enemy!")
             print("+50 Coins!")
             character.setCoinAmount(character.getCoinAmount() + 50)
+            val = True
+            keyCount+= 1
             return
         playerDamaged += gobPatrol4.getAttack()
-        print("Enemy did " + gobPatrol4.getAttack() + " points of damage")
+        print("Enemy did " + str(gobPatrol4.getAttack()) + " points of damage")
         print("You now have " + str(character.getHealth() - playerDamaged) +" health points")
         if playerDamaged >= character.getHealth():
             print("You were defeated but your drink a potion before your eyes close...")
@@ -289,12 +302,11 @@ def cave():
     if stayOrLeave == "1":
         print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
         caveBattle()
-        keyCount += 1
         print("You found a key in the satchel of one of the Goblins. You now have " + str(keyCount) + " keys")
-        cave = True
         if keyCount == 4:
             endFight()
-        sequence2
+            return
+        sequence2()
 def mountain():
     #to do
     global keyCount
@@ -308,11 +320,10 @@ def mountain():
     if stayOrLeave == "1":
         print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
         mtnBattle()
-        keyCount += 1
-        mtn = True
         print("You found a key in the hands of one of the Goblins. You now have " + str(keyCount) + " keys")
         if keyCount == 4:
             endFight()
+            return
         sequence2()
 
 def village():
@@ -328,11 +339,10 @@ def village():
     if stayOrLeave == "1":
         print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
         villageBattle()
-        keyCount += 1
         print("You found a key in the pocket of one of the Goblins. You now have " + str(keyCount) + " keys")
-        village = True
         if keyCount == 4:
             endFight()
+            return
         sequence2()
 def valley():
     global keyCount
@@ -346,48 +356,43 @@ def valley():
     if stayOrLeave == "1":
         print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
         valleyBattle()
-        keyCount += 1
         print("You found a key in the canteen of one of the Goblins. You now have " + str(keyCount) + " keys")
-        valley = True
         if keyCount == 4:
             endFight()
+            return
         sequence2()
 
 def sequence2():
-    global cave
-    global village
+    global cavo
+    global ville
     global mtn
-    global valley
+    global val
     escape = input("Where will you go? Cave(1) or Mountain(2) or Village(3) or Valley(4) ")
     while escape != '1' and escape != '2' and escape != '3' and escape != '4':
         print("Invalid input. Try Again")
         escape = input("Hide! Where will you go? Cave(1) or Hill(2) or Village(3) or Valley(4) ")
     if escape == '1':
-        if (cave == True):
+        if (cavo == True):
             print("You already got the key from the cave. Pick another place")
             sequence2()
-            return
         print("You head towards a cave")
         cave()
     if escape == '2':
         if (mtn == True):
             print("You already got the key from the mountain. Pick another place")
             sequence2()
-            return
         print("You head towards a mountain")
         mountain()
     if escape == '3':
-        if (village == True):
+        if (ville == True):
             print("You already got the key from the cave. Pick another place")
             sequence2()
-            return
         print("You head towards a village")
         village()
     if escape == '4':
-        if (valley == True):
+        if (val == True):
             print("You already got the key from the cave. Pick another place")
             sequence2()
-            return
         print("You head towards a valley")
         valley()
 sequence2()

@@ -98,7 +98,7 @@ character = champion(class_data[0], class_data[1], 500, 15*myLuck)
 pprint(vars(character))
 
 class enemy:
-    def __init__ (self, eHealth, eAttack, ePower, eChance, eName):
+    def __init__ (self, eHealth, eAttack, eName):
         self.health = eHealth
         self.attack = eAttack
         self.name = eName    
@@ -115,25 +115,16 @@ class enemy:
     def setName(self, newName):
         self.name = newName
 
-class bossEnemy (enemy):
-    def __init__ (self, eHealth, eAttack, eName):
-        super().__init__(eHealth, eAttack, eName)
-
 def enemyGen(levelBoss, EnemyName):
     name = EnemyName
     if levelBoss == False:
         health = random.randint(50,350)
         attack = random.randint(20, 50)
-        power = random.randint(10,30)
-        chance = random.randint(1,10)
-        return enemy(health, attack, power, chance, name)
+        return enemy(health, attack, name)
     else:
         health = random.randint(200,600)
-        attack = random.randint(75, 150)
-        power = random.randint(35, 55)
-        chance = random.randint(3,10)
-        superMove = random.randint(100, 200)
-        return bossEnemy(health, attack, power, chance, name, superMove)
+        attack = random.randint(150, 300)
+        return enemy(health, attack, name)
 gobPatrol = enemyGen(False, 'Goblin Patrol')
 gobPatrol2 = enemyGen(False, 'Goblin Patrol')
 gobPatrol3 = enemyGen(False, 'Goblin Patrol')
@@ -166,32 +157,71 @@ def sequence1():
 
         
 sequence1()
-def leaveLocation():
-    explore = input("Do you want to explore the cave(1) or the mountain(2) or the village(3) or the valley(4)? ")
-    while explore != '1' and explore != '2' and explore != '3' and explore != '4':
-        print("Invalid input. Try Again")
-        explore = input("Hide! Where will you go? Cave(1) or Hill(2) or Village(3) or Valley(4) ")
-    if explore == '1':
-        print("You head towards a cave")
-        cave()
-    if explore == '2':
-        print("You head towards a mountain")
-        mountain()
-    if explore == '3':
-        print("You head towards a village")
-        village()
-    if explore == '4':
-        print("You head towards a valley")
-        valley()
 
+bossOpp = enemyGen(True, 'Goblin Chief')
 def endFight():
-    print("at boss fight**********************************")
-    #todo boss batlle and finale
-    endSeq()
-    return
-def endSeq():
-    print("in endseq -_-__-_____-")
-    return
+    print("You have found all 4 keys noted on Daj's map. You turn the map over and find a small scribble in the bottom left corner. It reads 'YOU MUST DEFEAT THE GOBLIN CHIEF BEFORE HE DESTROYS THE WORLD'")
+    print("So the Goblin Chief is the evil mastermind. Time to face him. You head to the Chief's Palace.")
+    time.sleep(1.5)
+    print(".")
+    time.sleep(0.5)
+    print(".")
+    time.sleep(0.5)
+    print(".")
+    time.sleep(0.5)
+    print(".\n")
+    print("You arrive at the Palace. You see the Goblin Chief standing with some Goblin Patrollers. ")
+    time.sleep(0.3)
+    print(str(character.getChampionName())+": Goblin Chief! It's time for for you stop your evil plan or I'll have to stop it for you.")
+    time.sleep(0.3)
+    print("Goblin Chief: Stop my plan? You and what army? I don't even know you.")
+    time.sleep(0.3)
+    print(str(character.getChampionName())+": You may not know me now but you will.")
+    time.sleep(0.3)
+    print("Goblin Chief: You'll have to defeat me in battle to stop me, peasant.")
+    time.sleep(0.3)
+    print(str(character.getChampionName())+": Very well. It's time to battle!")
+    endBattle()
+    print("With the Goblin Chief defeated the Goblin's recognize you as their leader now. You live out your days ruling fairly a nd justly and make peace with the surrounding villages.")
+    print("final stats:")
+    pprint(vars(character))
+    print("THE END")
+    time.sleep(1.5)
+    print(".")
+    time.sleep(0.5)
+    print(".")
+    time.sleep(0.5)
+    print(".")
+    time.sleep(0.5)
+    print(".\n")
+    print("THANKS FOR PLAYING")
+    print("░██╗░░░░░░░██╗░█████╗░░██████╗████████╗██╗███╗░░██╗░██████╗░  ██╗░░██╗███████╗██████╗░░█████╗░")
+    print("░██║░░██╗░░██║██╔══██╗██╔════╝╚══██╔══╝██║████╗░██║██╔════╝░  ██║░░██║██╔════╝██╔══██╗██╔══██╗")
+    print("░╚██╗████╗██╔╝███████║╚█████╗░░░░██║░░░██║██╔██╗██║██║░░██╗░  ███████║█████╗░░██████╔╝██║░░██║")
+    print("░░████╔═████║░██╔══██║░╚═══██╗░░░██║░░░██║██║╚████║██║░░╚██╗  ██╔══██║██╔══╝░░██╔══██╗██║░░██║")
+    print("░░╚██╔╝░╚██╔╝░██║░░██║██████╔╝░░░██║░░░██║██║░╚███║╚██████╔╝  ██║░░██║███████╗██║░░██║╚█████╔╝")
+    print("░░░╚═╝░░░╚═╝░░╚═╝░░╚═╝╚═════╝░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░╚═════╝░  ╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝░╚════╝░")
+    
+def endBattle():
+    playerDamaged = 0
+    oppDamaged = 0
+    while (playerDamaged < character.getHealth()) and (bossOpp.getHealth() > oppDamaged):
+        oppDamaged += character.getMeleeAttackStat()
+        print("You did " + str(character.getMeleeAttackStat()) + " points of damage")
+        print("Goblin Patrol now has " + str(bossOpp.getHealth() - oppDamaged) + " health points")
+        if oppDamaged >= bossOpp.getHealth():
+            print("You defeated the Goblin Chief!")
+            print("+1500 Coins!")
+            character.setCoinAmount(character.getCoinAmount() + 1500)  
+            return
+        playerDamaged += bossOpp.getAttack()
+        print("Enemy did " + str(bossOpp.getAttack()) + " points of damage")
+        print("You now have " + str(character.getHealth() - playerDamaged) +" health points")
+        if playerDamaged >= character.getHealth():
+            print("You were defeated but your drink a potion before your eyes close...")
+            character.setHealthStat(character.getHealth() + 50)
+            character.setMeleeAttackStat(character.getMeleeAttackStat() + 50)
+            endBattle()
 
 def caveBattle():
     global keyCount
@@ -298,7 +328,7 @@ def cave():
         print("Invalid input. try again")
         stayOrLeave = input("Explore cave(1) or go somewhere else(2)? ")
     if stayOrLeave == "2":
-        leaveLocation()
+        sequence2()
     if stayOrLeave == "1":
         print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
         caveBattle()
@@ -316,9 +346,9 @@ def mountain():
         print("Invalid input. try again")
         stayOrLeave = input("Explore mountain(1) or go somewhere else(2)? ")
     if stayOrLeave == "2":
-        leaveLocation()
+        sequence2()
     if stayOrLeave == "1":
-        print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
+        print("You climb up the mountain. As you reach the top you realize it's a Goblin Outpost. Time to fight")
         mtnBattle()
         print("You found a key in the hands of one of the Goblins. You now have " + str(keyCount) + " keys")
         if keyCount == 4:
@@ -335,9 +365,9 @@ def village():
         print("Invalid input. try again")
         stayOrLeave = input("Explore village(1) or go somewhere else(2)? ")
     if stayOrLeave == "2":
-        leaveLocation()
+        sequence2()
     if stayOrLeave == "1":
-        print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
+        print("You arrive at the village. Goblin Soldiers start yelling at you at the gates. Time to fight")
         villageBattle()
         print("You found a key in the pocket of one of the Goblins. You now have " + str(keyCount) + " keys")
         if keyCount == 4:
@@ -352,9 +382,9 @@ def valley():
         print("Invalid input. try again")
         stayOrLeave = input("Explore valley(1) or go somewhere else(2)? ")
     if stayOrLeave == "2":
-        leaveLocation()
+        sequence2()
     if stayOrLeave == "1":
-        print("You venture deeper into the cave. You hear voices as you turn a corner and run into a patrol of goblins. Time to fight")
+        print("You travel to the valley. You hear leaves rustling. It's a trap! Time to fight")
         valleyBattle()
         print("You found a key in the canteen of one of the Goblins. You now have " + str(keyCount) + " keys")
         if keyCount == 4:
@@ -375,25 +405,21 @@ def sequence2():
         if (cavo == True):
             print("You already got the key from the cave. Pick another place")
             sequence2()
-        print("You head towards a cave")
         cave()
     if escape == '2':
         if (mtn == True):
             print("You already got the key from the mountain. Pick another place")
             sequence2()
-        print("You head towards a mountain")
         mountain()
     if escape == '3':
         if (ville == True):
             print("You already got the key from the cave. Pick another place")
             sequence2()
-        print("You head towards a village")
         village()
     if escape == '4':
         if (val == True):
             print("You already got the key from the cave. Pick another place")
             sequence2()
-        print("You head towards a valley")
         valley()
 sequence2()
 

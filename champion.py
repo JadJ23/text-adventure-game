@@ -26,6 +26,7 @@ ville = False
 mtn = False
 cavo = False
 myLuck = 0
+end = False
 
 class champion:
     def __init__(self, cName, championMeleeAttack, championHealth, cCoin):
@@ -203,6 +204,7 @@ def endFight():
     print("░░░╚═╝░░░╚═╝░░╚═╝░░╚═╝╚═════╝░░░░╚═╝░░░╚═╝╚═╝░░╚══╝░╚═════╝░  ╚═╝░░╚═╝╚══════╝╚═╝░░╚═╝░╚════╝░")
     
 def endBattle():
+    global end
     playerDamaged = 0
     oppDamaged = 0
     while (playerDamaged < character.getHealth()) and (bossOpp.getHealth() > oppDamaged):
@@ -213,6 +215,7 @@ def endBattle():
             print("You defeated the Goblin Chief!")
             print("+1500 Coins!")
             character.setCoinAmount(character.getCoinAmount() + 1500)  
+            end = True
             return
         playerDamaged += bossOpp.getAttack()
         print("Enemy did " + str(bossOpp.getAttack()) + " points of damage")
@@ -322,6 +325,9 @@ def valleyBattle():
         
 def cave():
     global keyCount
+    global end
+    if (end == True and keyCount == 4):
+        return
     print("You reach the cave")
     stayOrLeave = input("Explore cave(1) or go somewhere else(2)? ")
     while stayOrLeave != "1" and stayOrLeave != "2":
@@ -340,6 +346,9 @@ def cave():
 def mountain():
     #to do
     global keyCount
+    global end
+    if (end == True and keyCount == 4):
+        return
     print("You reach the top of the mountain")
     stayOrLeave = input("Explore mountain(1) or go somewhere else(2)? ")
     while stayOrLeave != "1" and stayOrLeave != "2":
@@ -359,6 +368,9 @@ def mountain():
 def village():
     #todo
     global keyCount
+    global end
+    if (end == True and keyCount == 4):
+        return
     print("You arrive at a village")
     stayOrLeave = input("Explore village(1) or go somewhere else(2)? ")
     while stayOrLeave != "1" and stayOrLeave != "2":
@@ -376,6 +388,9 @@ def village():
         sequence2()
 def valley():
     global keyCount
+    global end
+    if (end == True and keyCount == 4):
+        return
     print("You reach the valley")
     stayOrLeave = input("Explore valley(1) or go somewhere else(2)? ")
     while stayOrLeave != "1" and stayOrLeave != "2":
@@ -397,6 +412,10 @@ def sequence2():
     global ville
     global mtn
     global val
+    global keyCount
+    global end
+    if end == True and keyCount == 4:
+        return
     escape = input("Where will you go? Cave(1) or Mountain(2) or Village(3) or Valley(4) ")
     while escape != '1' and escape != '2' and escape != '3' and escape != '4':
         print("Invalid input. Try Again")
